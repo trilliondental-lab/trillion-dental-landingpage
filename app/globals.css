@@ -199,8 +199,8 @@ nav a { font-size:13px; }
 .tracking-copy > p:nth-of-type(2) { max-width:550px; color:var(--muted); font-size:17px; line-height:1.75; }
 .tracking-copy ul { list-style:none; margin:35px 0 25px; padding:0; display:grid; gap:14px; }
 .tracking-copy li { color:#d7d3ca; font-size:16px; }.tracking-copy li span { display:inline-grid; place-items:center; width:24px; height:24px; margin-right:12px; border:1px solid var(--gold); border-radius:50%; color:var(--gold); font-size:11px; }
-.portal-note { color:var(--gold2); font-size:14px; }
-.portal-button { width:max-content; margin-top:28px; }
+.portal-note { display:block; width:max-content; color:var(--gold2); font-size:14px; margin-bottom:14px; }
+.portal-button { width:max-content; margin-top:0; }
 .portal-window { background:#11110f; border:1px solid #343129; box-shadow:0 30px 90px rgba(0,0,0,.5); overflow:hidden; }
 .portal-top { min-height:76px; padding:0 26px; display:flex; align-items:center; gap:25px; border-bottom:1px solid #2c2a25; }
 .portal-top .brand { margin-right:auto; }.portal-top .brand-logo { width:31px; height:31px; }.portal-top .brand > span { display:none; }.portal-top > span { color:#a9a69f; font:11px var(--font-geist-mono); letter-spacing:.16em; }.portal-top > b { color:#75d39b; font:10px var(--font-geist-mono); letter-spacing:.12em; }
@@ -252,6 +252,14 @@ nav a { font-size:13px; }
   .portal-top { padding-inline:16px; }.portal-top > span { display:none; }.portal-summary > span { padding:15px 10px; font-size:10px; }.portal-summary strong { font-size:22px; }.portal-table { padding-inline:10px; overflow-x:auto; }.portal-row { width:580px; }.portal-progress { margin-inline:10px; }
   .material-photo-view { height:420px; }.case-dialog { grid-template-columns:1fr; }.case-dialog-photo { min-height:330px; }.case-dialog-copy { padding:35px 25px; }.case-dialog-copy h2 { font-size:36px; }
   .case-meta b { float:none; display:block; margin-top:16px; }
+}
+
+@media (max-width:600px) {
+  .hero-scroll { height:auto; }
+  .hero { height:auto; min-height:100svh; position:relative; display:flex; flex-direction:column; align-items:stretch; padding-bottom:36px; }
+  .hero-copy { flex:0 0 auto; width:100%; padding-bottom:0; }
+  .hero-visual { position:relative; flex:0 0 300px; width:112%; height:300px; top:auto; right:auto; margin:18px -6% 0; }
+  .hero-actions { margin-top:30px; }
 }
 
 /* Revision: clearer typography and stronger product storytelling */
