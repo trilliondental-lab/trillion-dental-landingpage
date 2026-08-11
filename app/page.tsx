@@ -222,7 +222,7 @@ export default function Home() {
       <section id="services" className="capabilities section-pad">
         <div className="cap-title reveal"><p className="eyebrow">Other lab services</p><h2>Zirconia first.<br />Full lab support.</h2><p className="cap-intro">Zirconia is our main focus, but you can send us your other dental cases too.</p></div>
         <div className="cap-list reveal">
-          {["Zirconia crowns & bridges", "PFM crowns", "Acrylic dentures", "Flexible dentures", "3D printed appliances", "Orthodontic appliances", "Other dental cases"].map((x, i) => <div key={x}><span>0{i + 1}</span><strong>{x}</strong><b>↗</b></div>)}
+          {["Zirconia crowns & bridges", "PFM crowns", "Acrylic dentures", "Flexible dentures", "3D printed appliances", "Orthodontic appliances", "Other dental cases"].map((x, i) => <div key={x}><span>0{i + 1}</span><strong>{x}</strong></div>)}
         </div>
       </section>
 
