@@ -143,7 +143,12 @@ export default function Home() {
 
       <section id="workflow" className="workflow section-pad">
         <div className="workflow-head reveal">
-          <div><p className="eyebrow">How we make your case</p><h2>A clear digital<br />workflow.</h2></div>
+          <div>
+            <p className="eyebrow desktop-workflow-title">How we make your case</p>
+            <p className="eyebrow mobile-workflow-title">How to send your case</p>
+            <h2 className="desktop-workflow-title">A clear digital<br />workflow.</h2>
+            <h2 className="mobile-workflow-title">Send your case,<br />your way.</h2>
+          </div>
           <p>Every case is checked twice before it is packed and sent to your clinic.</p>
         </div>
         <div className="case-entry reveal">

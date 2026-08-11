@@ -79,6 +79,7 @@ h2 em { color:var(--gold); font-family:Georgia,serif; font-weight:400; text-tran
 .workflow::before { content:"06"; position:absolute; right:-2vw; top:3vw; color:#0d0d0d; font-size:35vw; font-weight:700; line-height:1; }
 .workflow-head { position:relative; display:grid; grid-template-columns:1fr 350px; gap:50px; align-items:end; margin-bottom:100px; }
 .workflow-head h2 { margin-bottom:0; }.workflow-head > p { color:var(--muted); font-size:14px; line-height:1.8; }
+.mobile-workflow-title { display:none; }
 .workflow-track { position:relative; display:grid; grid-template-columns:repeat(6,1fr); }
 .workflow-track::before { content:""; position:absolute; left:4%; right:4%; top:53px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold),transparent); opacity:.42; }
 .workflow-step { position:relative; min-height:200px; padding:0 15px; transition-delay:var(--delay); }
@@ -311,6 +312,8 @@ nav a { font-size:14px; }.nav-cta { font-size:13px; }
   .workflow-note,
   .qc-proof { display:none; }
   .workflow-head { margin-bottom:30px; }
+  .desktop-workflow-title { display:none; }
+  .mobile-workflow-title { display:block; }
   .workflow-head h2 { font-size:42px; line-height:.92; }
   .case-entry { grid-template-columns:1fr; margin:0; }
   .case-entry > div { min-height:auto; padding:18px 20px; }
