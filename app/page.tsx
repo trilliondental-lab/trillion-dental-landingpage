@@ -193,7 +193,7 @@ export default function Home() {
           </div>
         </div>
         <div className={`material-photo-view ${materialMode}`}>
-          <Image src="/zirconia-materials-v1.png" alt={materialMode === "mono" ? "Monolayer zirconia crown with an even shade" : "Multilayer zirconia crown with a natural shade gradient"} width={1536} height={1024} />
+          <Image key={materialMode} src={materialMode === "mono" ? "/monolayer-zirconia-v1.png" : "/multilayer-zirconia-v1.png"} alt={materialMode === "mono" ? "Monolayer zirconia crown with an even shade" : "Multilayer zirconia crown with a natural shade gradient"} width={1254} height={1254} />
           <div className="material-picture-label"><span>{materialMode === "mono" ? "MONOLAYER" : "MULTILAYER"}</span><strong>{materialMode === "mono" ? "EVEN COLOUR" : "COLOUR GRADIENT"}</strong></div>
           <div className="colour-scale"><span>CERVICAL</span><i /><span>OCCLUSAL</span></div>
         </div>
