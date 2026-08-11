@@ -187,8 +187,8 @@ nav a { font-size:13px; }
 .qc-proof { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:28px; }
 .qc-card { min-height:255px; display:grid; grid-template-columns:44% 56%; background:#0f0e0c; border:1px solid #292721; overflow:hidden; }
 .qc-photo { min-height:255px; background-repeat:no-repeat; background-position:center; background-size:cover; }
-.qc-card-one .qc-photo { background-image:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.28)),url('/crown-hero-v2.png'); background-size:contain; }
-.qc-card-two .qc-photo { background-image:linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.25)),url('/case-examples-v1.png'); background-size:300% 100%; background-position:50% center; }
+.qc-card-one .qc-photo { background-image:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.28)),url('/crown-hero-v2.webp'); background-size:contain; }
+.qc-card-two .qc-photo { background-image:linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.25)),url('/case-examples-v1.webp'); background-size:300% 100%; background-position:50% center; }
 .qc-card > div:last-child { padding:38px 30px; align-self:center; }
 .qc-card span { color:var(--gold); font:10px var(--font-geist-mono); letter-spacing:.18em; }
 .qc-card h3 { margin:13px 0 10px; font-size:25px; font-weight:480; }
@@ -220,7 +220,7 @@ nav a { font-size:13px; }
 
 .case-card { border:0; padding:0; color:inherit; text-align:left; font-family:inherit; cursor:pointer; transition:transform .3s,border-color .3s; border:1px solid transparent; }
 .case-card:hover { transform:translateY(-8px); border-color:rgba(201,164,91,.5); }.case-card:focus-visible { outline:2px solid var(--gold); outline-offset:3px; }
-.case-art { background-image:url('/case-examples-v1.png')!important; background-size:300% 100%!important; background-repeat:no-repeat!important; }
+.case-art { background-image:url('/case-examples-v1.webp')!important; background-size:300% 100%!important; background-repeat:no-repeat!important; }
 .case-image-one .case-art,.case-image-one.case-dialog-photo { background-image:url('/case-single-central.webp')!important; background-position:center!important; background-size:cover!important; }
 .case-image-two .case-art,.case-image-two.case-dialog-photo { background-image:url('/case-posterior-bridge.webp')!important; background-position:center!important; background-size:cover!important; }
 .case-image-three .case-art,.case-image-three.case-dialog-photo { background-image:url('/case-anterior-bridge.webp')!important; background-position:center!important; background-size:cover!important; }
@@ -229,7 +229,7 @@ nav a { font-size:13px; }
 .example-note { margin:22px 0 0; color:#6f6b64; font-size:13px; }
 .case-modal { position:fixed; z-index:100; inset:0; display:grid; place-items:center; padding:24px; background:rgba(0,0,0,.82); backdrop-filter:blur(10px); }
 .case-dialog { width:min(1040px,95vw); max-height:90vh; overflow:auto; position:relative; display:grid; grid-template-columns:58% 42%; background:#0e0e0c; border:1px solid #4a4234; box-shadow:0 30px 100px rgba(0,0,0,.7); }
-.case-dialog-photo { min-height:560px; background-image:url('/case-examples-v1.png'); background-size:300% 100%; background-repeat:no-repeat; }
+.case-dialog-photo { min-height:560px; background-image:url('/case-examples-v1.webp'); background-size:300% 100%; background-repeat:no-repeat; }
 .case-dialog-copy { padding:65px 45px; align-self:center; }.case-dialog-copy > span { color:var(--gold); font:11px var(--font-geist-mono); letter-spacing:.17em; }.case-dialog-copy h2 { font-size:44px; }.case-dialog-copy p { color:#aaa69e; font-size:17px; line-height:1.75; }.case-dialog-copy small { display:block; margin-top:30px; color:#6f6b63; font-size:12px; }
 .modal-close { position:absolute; z-index:4; top:16px; right:16px; width:42px; height:42px; border:1px solid #4a4438; background:#0b0b0a; color:var(--gold2); font-size:26px; cursor:pointer; }
 

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://trillion-zirconia-lab.afiq2275.chatgpt.site"),
   title: "Trillion Dental Lab | Zirconia. Perfected.",
   description: "Zirconia crowns and bridges are our main focus. We also make PFM crowns, dentures and dental appliances.",
-  icons: { icon: "/trillion-mark-v1.png", shortcut: "/trillion-mark-v1.png", apple: "/trillion-mark-v1.png" },
+  icons: { icon: "/trillion-mark-v1.webp", shortcut: "/trillion-mark-v1.webp", apple: "/trillion-mark-v1.webp" },
   openGraph: { title: "Trillion Dental Lab | Zirconia. Perfected.", description: "Zirconia crowns and bridges made for a good fit and natural finish.", images: [{ url: "/og.png", width: 1672, height: 941 }] },
   twitter: { card: "summary_large_image", title: "Trillion Dental Lab | Zirconia. Perfected.", description: "Zirconia crowns and bridges made for a good fit and natural finish.", images: ["/og.png"] },
 };

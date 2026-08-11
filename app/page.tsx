@@ -30,7 +30,7 @@ const cases = [
 
 function BrandMark() {
   return <a className="brand" href="#top" aria-label="Trillion Dental Lab home">
-    <Image className="brand-logo" src="/trillion-mark-v1.png" alt="" width={120} height={86} />
+    <Image className="brand-logo" src="/trillion-mark-v1.webp" alt="" width={120} height={86} />
     <span>TRILLION<small>DENTAL LAB</small></span>
   </a>;
 }
@@ -99,8 +99,8 @@ export default function Home() {
           </div>
           <div className="hero-visual">
             <div className="crown-stage">
-              <Image className="crown-photo" src="/crown-hero-v2.png" alt="Realistic white zirconia molar crown" width={1500} height={1049} priority />
-              <Image className="crown-scan" src="/crown-hero-v2.png" alt="" width={1500} height={1049} aria-hidden="true" />
+              <Image className="crown-photo" src="/crown-hero-v2.webp" alt="Realistic white zirconia molar crown" width={1500} height={1049} priority />
+              <Image className="crown-scan" src="/crown-hero-v2.webp" alt="" width={1500} height={1049} aria-hidden="true" />
             </div>
           </div>
         </div>
@@ -154,7 +154,7 @@ export default function Home() {
           >
             <span className="precision-ring ring-one" />
             <Image
-              src="/crown-hero-v2.png"
+              src="/crown-hero-v2.webp"
               alt="Interactive zirconia crown shown during quality checking"
               width={1500}
               height={1049}
