@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const CASE_SUBMISSION_URL = "https://wa.me/601113348503";
+const CLINIC_PORTAL_URL = "https://labtrack-trilliondental.netlify.app/";
 
 const disciplines = [
   ["01", "Fit", "Clean margins and contacts for a better fit."],
@@ -89,6 +90,7 @@ export default function Home() {
       <section className="hero-scroll" ref={heroRef}>
         <div className="hero">
           <div className="hero-grid" aria-hidden="true" />
+          <div className="malaysia-badge" aria-label="Malaysia's No.1 Zirconia Laboratory"><span aria-hidden="true">🇲🇾</span><small>MALAYSIA&apos;S NO.1</small></div>
           <div className="hero-copy">
             <p className="eyebrow">Malaysia&apos;s No.1 Zirconia Laboratory</p>
             <h1><span>Zirconia.</span><span className="gold-line">Perfected.</span></h1>
@@ -204,7 +206,7 @@ export default function Home() {
           <p>Clinics can log in to our dedicated website and check every case at any time. See the current stage, expected delivery date and latest update without calling the lab.</p>
           <ul><li><span>✓</span> Live case progress</li><li><span>✓</span> Expected delivery date</li><li><span>✓</span> Updates in one place</li></ul>
           <span className="portal-note">Ask our team for your clinic login.</span>
-          <a className="button outline portal-button" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">Open clinic portal <span>↗</span></a>
+          <a className="button outline portal-button" href={CLINIC_PORTAL_URL} target="_blank" rel="noreferrer">Open clinic portal <span>↗</span></a>
         </div>
         <div className="portal-window reveal" aria-label="Example of the clinic case tracking website">
           <div className="portal-top"><BrandMark /><span>CLINIC PORTAL</span><b>● LIVE</b></div>
