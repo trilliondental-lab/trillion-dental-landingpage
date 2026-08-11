@@ -18,6 +18,7 @@ nav a { color:#aaa8a3; font-size:11px; text-transform:uppercase; letter-spacing:
 nav a:hover { color:var(--gold2); }
 .nav-cta { border:1px solid var(--gold); color:var(--gold2); padding:14px 19px; text-transform:uppercase; letter-spacing:.16em; font-size:10px; }
 .nav-cta span { margin-left:18px; }
+.mobile-contact-cta { display:none; }
 .menu-toggle { display:none; }
 
 .hero-scroll { height:190svh; position:relative; --hero-progress:0; --schematic:0; background:#070707; }
@@ -236,6 +237,10 @@ nav a { font-size:13px; }
 }
 
 @media (max-width:700px) {
+  .nav-shell { position:fixed; height:76px; padding-inline:18px; background:rgba(7,7,7,.92); backdrop-filter:blur(14px); box-shadow:0 8px 30px rgba(0,0,0,.28); }
+  .nav-shell nav { top:76px; }
+  .mobile-contact-cta { display:inline-flex; align-items:center; justify-content:center; min-height:38px; margin-left:auto; padding:0 13px; border:1px solid var(--gold); color:var(--gold2); text-transform:uppercase; letter-spacing:.1em; font-size:9px; font-weight:600; white-space:nowrap; }
+  .menu-toggle { margin-left:7px; }
   .brand { font-size:12px; }.brand-logo { width:34px; height:34px; } nav a { font-size:15px; }
   .eyebrow { font-size:10px; }.hero-intro { font-size:16px; }.button,.text-link { font-size:11px; }
   .section-heading > p:last-child,.workflow-head > p,.cases-head > p,.material-copy > p:nth-of-type(2),.cap-intro,.tracking-copy > p:nth-of-type(2) { font-size:16px; }

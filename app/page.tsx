@@ -82,6 +82,7 @@ export default function Home() {
           <a href="#tracking" onClick={() => setMenuOpen(false)}>Case tracking</a>
           <a href="#services" onClick={() => setMenuOpen(false)}>Other services</a>
         </nav>
+        <a className="mobile-contact-cta" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">Contact us now</a>
         <a className="nav-cta" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">Send a case <span>↗</span></a>
       </header>
 
