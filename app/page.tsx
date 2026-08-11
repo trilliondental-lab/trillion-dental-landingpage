@@ -77,7 +77,7 @@ export default function Home() {
         <BrandMark />
         <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation" aria-expanded={menuOpen}><span /><span /></button>
         <nav className={menuOpen ? "open" : ""} aria-label="Primary navigation">
-          <a href="#precision" onClick={() => setMenuOpen(false)}>Zirconia</a>
+          <a href="#zirconia" onClick={() => setMenuOpen(false)}>Zirconia</a>
           <a href="#workflow" onClick={() => setMenuOpen(false)}>Workflow</a>
           <a href="#tracking" onClick={() => setMenuOpen(false)}>Case tracking</a>
           <a href="#services" onClick={() => setMenuOpen(false)}>Other services</a>
@@ -103,6 +103,34 @@ export default function Home() {
               <Image className="crown-scan" src="/crown-hero-v2.png" alt="" width={1500} height={1049} aria-hidden="true" />
             </div>
           </div>
+        </div>
+      </section>
+
+      <section id="zirconia" className="material section-pad">
+        <div className="material-copy reveal">
+          <p className="eyebrow">Zirconia options</p>
+          <h2>See the colour<br />difference.</h2>
+          <p>Choose an option to see how the colour and translucency change.</p>
+          <div className="material-tabs" role="group" aria-label="Choose zirconia type">
+            <button className={`material-tab ${materialMode === "mono" ? "active" : ""}`} onClick={() => setMaterialMode("mono")} aria-pressed={materialMode === "mono"}><span>MONOLAYER</span><strong>One even shade</strong><p>Strong and consistent. Often used for posterior and long-span cases.</p></button>
+            <button className={`material-tab ${materialMode === "multi" ? "active" : ""}`} onClick={() => setMaterialMode("multi")} aria-pressed={materialMode === "multi"}><span>MULTILAYER</span><strong>Natural shade change</strong><p>Warmer near the gum line and more translucent near the biting surface.</p></button>
+          </div>
+        </div>
+        <div className={`material-photo-view ${materialMode}`}>
+          <Image className={`material-product-image ${materialMode === "mono" ? "active" : ""}`} src="/monolayer-zirconia-v1.webp" alt="Monolayer zirconia crown with an even shade" width={900} height={900} loading="eager" />
+          <Image className={`material-product-image ${materialMode === "multi" ? "active" : ""}`} src="/multilayer-zirconia-v1.webp" alt="Multilayer zirconia crown with a natural shade gradient" width={900} height={900} loading="eager" />
+          <div className="material-picture-label"><span>{materialMode === "mono" ? "MONOLAYER" : "MULTILAYER"}</span><strong>{materialMode === "mono" ? "EVEN COLOUR" : "COLOUR GRADIENT"}</strong></div>
+          <div className="colour-scale"><span>CERVICAL</span><i /><span>OCCLUSAL</span></div>
+        </div>
+      </section>
+
+      <section id="cases" className="cases section-pad">
+        <div className="cases-head reveal"><div><p className="eyebrow">Case examples</p><h2>Click to view<br />each case.</h2></div><p>Open a case to see a larger picture and a short description.</p></div>
+        <div className="case-grid">
+          {cases.map((item, index) => <button className={`case-card reveal ${item.image}`} key={item.id} onClick={() => setSelectedCase(index)} aria-label={`View ${item.title} case example`}>
+            <div className="case-art"><i /></div>
+            <div className="case-meta"><span>{item.id} / {item.type}</span><h3>{item.title}</h3><p>{item.meta}</p><b>View case ↗</b></div>
+          </button>)}
         </div>
       </section>
 
@@ -188,34 +216,6 @@ export default function Home() {
             <div className="portal-row"><span>#ZR-1039</span><span>N. Tan</span><span><i className="status ready" />QC 2</span><span>12 Aug</span></div>
           </div>
           <div className="portal-progress"><span>CASE #ZR-1048</span><div><i /><i className="done" /><i /><i /><i /></div><small>Scan received → CAD design → Production → QC → Delivery</small></div>
-        </div>
-      </section>
-
-      <section className="material section-pad">
-        <div className="material-copy reveal">
-          <p className="eyebrow">Zirconia options</p>
-          <h2>See the colour<br />difference.</h2>
-          <p>Choose an option to see how the colour and translucency change.</p>
-          <div className="material-tabs" role="group" aria-label="Choose zirconia type">
-            <button className={`material-tab ${materialMode === "mono" ? "active" : ""}`} onClick={() => setMaterialMode("mono")} aria-pressed={materialMode === "mono"}><span>MONOLAYER</span><strong>One even shade</strong><p>Strong and consistent. Often used for posterior and long-span cases.</p></button>
-            <button className={`material-tab ${materialMode === "multi" ? "active" : ""}`} onClick={() => setMaterialMode("multi")} aria-pressed={materialMode === "multi"}><span>MULTILAYER</span><strong>Natural shade change</strong><p>Warmer near the gum line and more translucent near the biting surface.</p></button>
-          </div>
-        </div>
-        <div className={`material-photo-view ${materialMode}`}>
-          <Image className={`material-product-image ${materialMode === "mono" ? "active" : ""}`} src="/monolayer-zirconia-v1.webp" alt="Monolayer zirconia crown with an even shade" width={900} height={900} loading="eager" />
-          <Image className={`material-product-image ${materialMode === "multi" ? "active" : ""}`} src="/multilayer-zirconia-v1.webp" alt="Multilayer zirconia crown with a natural shade gradient" width={900} height={900} loading="eager" />
-          <div className="material-picture-label"><span>{materialMode === "mono" ? "MONOLAYER" : "MULTILAYER"}</span><strong>{materialMode === "mono" ? "EVEN COLOUR" : "COLOUR GRADIENT"}</strong></div>
-          <div className="colour-scale"><span>CERVICAL</span><i /><span>OCCLUSAL</span></div>
-        </div>
-      </section>
-
-      <section id="cases" className="cases section-pad">
-        <div className="cases-head reveal"><div><p className="eyebrow">Case examples</p><h2>Click to view<br />each case.</h2></div><p>Open a case to see a larger picture and a short description.</p></div>
-        <div className="case-grid">
-          {cases.map((item, index) => <button className={`case-card reveal ${item.image}`} key={item.id} onClick={() => setSelectedCase(index)} aria-label={`View ${item.title} case example`}>
-            <div className="case-art"><i /></div>
-            <div className="case-meta"><span>{item.id} / {item.type}</span><h3>{item.title}</h3><p>{item.meta}</p><b>View case ↗</b></div>
-          </button>)}
         </div>
       </section>
 
