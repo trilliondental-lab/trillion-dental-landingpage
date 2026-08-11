@@ -31,7 +31,7 @@ const cases = [
 
 function BrandMark() {
   return <a className="brand" href="#top" aria-label="Trillion Dental Lab home">
-    <Image className="brand-logo" src="/trillion-mark-v1.webp" alt="" width={120} height={86} />
+    <Image className="brand-logo" src="/trillion-mark-v1.webp" alt="" width={120} height={86} unoptimized />
     <span>TRILLION<small>DENTAL LAB</small></span>
   </a>;
 }
@@ -90,7 +90,7 @@ export default function Home() {
       <section className="hero-scroll" ref={heroRef}>
         <div className="hero">
           <div className="hero-grid" aria-hidden="true" />
-          <Image className="malaysia-corner-flag" src="/malaysia-corner-flag.webp" alt="Malaysian flag" width={720} height={529} priority />
+          <Image className="malaysia-corner-flag" src="/malaysia-corner-flag.webp" alt="Malaysian flag" width={720} height={529} priority unoptimized />
           <div className="hero-copy">
             <p className="eyebrow">Malaysia&apos;s No.1 Zirconia Laboratory</p>
             <h1><span>Zirconia.</span><span className="gold-line">Perfected.</span></h1>
@@ -101,8 +101,8 @@ export default function Home() {
           </div>
           <div className="hero-visual">
             <div className="crown-stage">
-              <Image className="crown-photo" src="/crown-hero-v2.webp" alt="Realistic white zirconia molar crown" width={1500} height={1049} priority />
-              <Image className="crown-scan" src="/crown-hero-v2.webp" alt="" width={1500} height={1049} aria-hidden="true" />
+              <Image className="crown-photo" src="/crown-hero-v2.webp" alt="Realistic white zirconia molar crown" width={1500} height={1049} priority unoptimized />
+              <Image className="crown-scan" src="/crown-hero-v2.webp" alt="" width={1500} height={1049} aria-hidden="true" unoptimized />
             </div>
           </div>
         </div>
@@ -119,8 +119,8 @@ export default function Home() {
           </div>
         </div>
         <div className={`material-photo-view ${materialMode}`}>
-          <Image className={`material-product-image ${materialMode === "mono" ? "active" : ""}`} src="/monolayer-zirconia-v1.webp" alt="Monolayer zirconia crown with an even shade" width={900} height={900} loading="eager" />
-          <Image className={`material-product-image ${materialMode === "multi" ? "active" : ""}`} src="/multilayer-zirconia-v1.webp" alt="Multilayer zirconia crown with a natural shade gradient" width={900} height={900} loading="eager" />
+          <Image className={`material-product-image ${materialMode === "mono" ? "active" : ""}`} src="/monolayer-zirconia-v1.webp" alt="Monolayer zirconia crown with an even shade" width={900} height={900} loading="eager" unoptimized />
+          <Image className={`material-product-image ${materialMode === "multi" ? "active" : ""}`} src="/multilayer-zirconia-v1.webp" alt="Multilayer zirconia crown with a natural shade gradient" width={900} height={900} loading="eager" unoptimized />
           <div className="material-picture-label"><span>{materialMode === "mono" ? "MONOLAYER" : "MULTILAYER"}</span><strong>{materialMode === "mono" ? "EVEN COLOUR" : "COLOUR GRADIENT"}</strong></div>
           <div className="colour-scale"><span>CERVICAL</span><i /><span>OCCLUSAL</span></div>
         </div>
@@ -160,6 +160,7 @@ export default function Home() {
               alt="Interactive zirconia crown shown during quality checking"
               width={1500}
               height={1049}
+              unoptimized
               style={{ transform: `perspective(900px) rotateX(${crownRotation.x}deg) rotateY(${crownRotation.y}deg)` }}
             />
           </div>

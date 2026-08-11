@@ -1,0 +1,17 @@
+[build]
+  publish = "netlify-dist"
+
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.webp"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[redirects]]
+  from = "/mobile-preview"
+  to = "/mobile-preview/index.html"
+  status = 200
