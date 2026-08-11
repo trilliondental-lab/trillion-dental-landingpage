@@ -90,7 +90,7 @@ export default function Home() {
         <div className="hero">
           <div className="hero-grid" aria-hidden="true" />
           <div className="hero-copy">
-            <p className="eyebrow">The zirconia laboratory</p>
+            <p className="eyebrow">Malaysia&apos;s No.1 Zirconia Laboratory</p>
             <h1><span>Zirconia.</span><span className="gold-line">Perfected.</span></h1>
             <p className="hero-intro">We make zirconia crowns and bridges that fit well, look natural and last.</p>
             <div className="hero-actions">
