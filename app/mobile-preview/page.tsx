@@ -1,4 +1,14 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 export default function MobilePreview() {
+  const [previewUrl, setPreviewUrl] = useState("/?mobile-preview=loading");
+
+  useEffect(() => {
+    setPreviewUrl(`/?mobile-preview=${Date.now()}`);
+  }, []);
+
   return (
     <main className="mobile-preview-shell">
       <div className="mobile-preview-heading">
@@ -8,7 +18,7 @@ export default function MobilePreview() {
       </div>
       <div className="phone-preview-frame">
         <div className="phone-preview-speaker" aria-hidden="true" />
-        <iframe src="/?mobile-preview=20260812" title="Trillion Dental mobile website preview" />
+        <iframe src={previewUrl} title="Trillion Dental mobile website preview" />
       </div>
     </main>
   );
