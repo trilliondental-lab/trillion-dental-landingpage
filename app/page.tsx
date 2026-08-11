@@ -90,7 +90,7 @@ export default function Home() {
       <section className="hero-scroll" ref={heroRef}>
         <div className="hero">
           <div className="hero-grid" aria-hidden="true" />
-          <div className="malaysia-badge" aria-label="Malaysia's No.1 Zirconia Laboratory"><span aria-hidden="true">🇲🇾</span><small>MALAYSIA&apos;S NO.1</small></div>
+          <Image className="malaysia-corner-flag" src="/malaysia-corner-flag.webp" alt="Malaysian flag" width={720} height={529} priority />
           <div className="hero-copy">
             <p className="eyebrow">Malaysia&apos;s No.1 Zirconia Laboratory</p>
             <h1><span>Zirconia.</span><span className="gold-line">Perfected.</span></h1>
