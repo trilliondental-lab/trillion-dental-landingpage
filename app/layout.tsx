@@ -6,11 +6,12 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://trillion-zirconia-lab.afiq2275.chatgpt.site"),
   title: "Trillion Dental Lab | Zirconia. Perfected.",
-  description: "Zirconia crown and bridge specialists. Digitally engineered for precision, strength and natural aesthetics.",
+  description: "Zirconia crowns and bridges are our main focus. We also make PFM crowns, dentures and dental appliances.",
   icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
-  openGraph: { title: "Trillion Dental Lab | Zirconia. Perfected.", description: "Digital zirconia crowns & bridges engineered for precision.", images: [{ url: "/og.png", width: 1672, height: 941 }] },
-  twitter: { card: "summary_large_image", title: "Trillion Dental Lab | Zirconia. Perfected.", description: "Digital zirconia crowns & bridges engineered for precision.", images: ["/og.png"] },
+  openGraph: { title: "Trillion Dental Lab | Zirconia. Perfected.", description: "Zirconia crowns and bridges made for a good fit and natural finish.", images: [{ url: "/og.png", width: 1672, height: 941 }] },
+  twitter: { card: "summary_large_image", title: "Trillion Dental Lab | Zirconia. Perfected.", description: "Zirconia crowns and bridges made for a good fit and natural finish.", images: ["/og.png"] },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
