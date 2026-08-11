@@ -3,6 +3,9 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
+// Replace this placeholder with Trillion's real case-submission website URL.
+const CASE_SUBMISSION_URL = "https://example.com/case-submission";
+
 const disciplines = [
   ["01", "Fit", "Clean margins and contacts for a better fit."],
   ["02", "Function", "Designed for the patient’s bite and movement."],
@@ -11,7 +14,7 @@ const disciplines = [
 ];
 
 const workflow = [
-  ["01", "Scan", "STL / PLY / IOS"],
+  ["01", "Case Received", "Scan / Model / Impression"],
   ["02", "CAD Design", "Margin to anatomy"],
   ["03", "Mill", "5-axis precision"],
   ["04", "Sinter", "Controlled cycle"],
@@ -79,7 +82,7 @@ export default function Home() {
           <a href="#tracking" onClick={() => setMenuOpen(false)}>Case tracking</a>
           <a href="#services" onClick={() => setMenuOpen(false)}>Other services</a>
         </nav>
-        <a className="nav-cta" href="#contact">Send a case <span>↗</span></a>
+        <a className="nav-cta" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">Send a case <span>↗</span></a>
       </header>
 
       <section className="hero-scroll" ref={heroRef}>
@@ -90,7 +93,7 @@ export default function Home() {
             <h1><span>Zirconia.</span><span className="gold-line">Perfected.</span></h1>
             <p className="hero-intro">We make zirconia crowns and bridges that fit well, look natural and last.</p>
             <div className="hero-actions">
-              <a className="button gold" href="#contact">Send your zirconia case <span>→</span></a>
+              <a className="button gold" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">Send your zirconia case <span>↗</span></a>
               <a className="text-link" href="#precision">Explore the process <span>↓</span></a>
             </div>
           </div>
@@ -115,16 +118,23 @@ export default function Home() {
       </section>
 
       <section id="precision" className="precision section-pad">
-        <div className="section-heading reveal">
-          <p className="eyebrow">Built around zirconia</p>
-          <h2>Made to fit.<br /><em>Made to work.</em></h2>
-          <p>We check every crown for fit, bite, strength and looks before it leaves our lab.</p>
+        <div className="precision-title reveal">
+          <p className="eyebrow">What we check</p>
+          <h2>Four checks.<br /><em>One better crown.</em></h2>
+          <p>Every crown is checked for fit, bite, strength and appearance.</p>
         </div>
-        <div className="discipline-grid">
-          {disciplines.map(([num, title, copy]) => <article className="discipline reveal" key={title}>
-            <span>{num}</span><div className="discipline-icon">{title === "Fit" ? "⌖" : title === "Function" ? "∿" : title === "Strength" ? "◇" : "✦"}</div>
-            <h3>{title}</h3><p>{copy}</p>
-          </article>)}
+        <div className="precision-showcase">
+          <div className="precision-product reveal">
+            <span className="precision-ring ring-one" /><span className="precision-ring ring-two" />
+            <Image src="/crown-hero-v2.png" alt="Zirconia crown shown during quality checking" width={1500} height={1049} />
+            <div className="precision-label label-fit">01 · FIT</div><div className="precision-label label-bite">02 · BITE</div><div className="precision-label label-strength">03 · STRENGTH</div><div className="precision-label label-looks">04 · LOOKS</div>
+          </div>
+          <div className="discipline-grid upgraded">
+            {disciplines.map(([num, title, copy]) => <article className="discipline reveal" key={title}>
+              <span>{num}</span><div className="discipline-icon">{title === "Fit" ? "⌖" : title === "Function" ? "∿" : title === "Strength" ? "◇" : "✦"}</div>
+              <h3>{title}</h3><p>{copy}</p>
+            </article>)}
+          </div>
         </div>
       </section>
 
@@ -132,6 +142,11 @@ export default function Home() {
         <div className="workflow-head reveal">
           <div><p className="eyebrow">How we make your case</p><h2>A clear digital<br />workflow.</h2></div>
           <p>Every case is checked twice before it is packed and sent to your clinic.</p>
+        </div>
+        <div className="case-entry reveal">
+          <div><span>01</span><strong>Digital Scan</strong><p>Send STL, PLY or IOS files.</p></div>
+          <div><span>02</span><strong>Physical Model</strong><p>Send your prepared dental model.</p></div>
+          <div><span>03</span><strong>Impression</strong><p>Send a conventional impression to our lab.</p></div>
         </div>
         <div className="workflow-track seven-steps">
           {workflow.map(([num, title, meta], i) => <article className={`workflow-step reveal ${title.startsWith("QC") ? "qc-step" : ""}`} key={title} style={{ "--delay": `${i * 60}ms` } as React.CSSProperties}>
@@ -152,6 +167,7 @@ export default function Home() {
           <p>Clinics can log in to our dedicated website and check every case at any time. See the current stage, expected delivery date and latest update without calling the lab.</p>
           <ul><li><span>✓</span> Live case progress</li><li><span>✓</span> Expected delivery date</li><li><span>✓</span> Updates in one place</li></ul>
           <span className="portal-note">Ask our team for your clinic login.</span>
+          <a className="button outline portal-button" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">Open clinic portal <span>↗</span></a>
         </div>
         <div className="portal-window reveal" aria-label="Example of the clinic case tracking website">
           <div className="portal-top"><BrandMark /><span>CLINIC PORTAL</span><b>● LIVE</b></div>
@@ -176,7 +192,7 @@ export default function Home() {
             <button className={`material-tab ${materialMode === "multi" ? "active" : ""}`} onClick={() => setMaterialMode("multi")} aria-pressed={materialMode === "multi"}><span>MULTILAYER</span><strong>Natural shade change</strong><p>Warmer near the gum line and more translucent near the biting surface.</p></button>
           </div>
         </div>
-        <div className={`material-photo-view reveal ${materialMode}`}>
+        <div className={`material-photo-view ${materialMode}`}>
           <Image src="/zirconia-materials-v1.png" alt={materialMode === "mono" ? "Monolayer zirconia crown with an even shade" : "Multilayer zirconia crown with a natural shade gradient"} width={1536} height={1024} />
           <div className="material-picture-label"><span>{materialMode === "mono" ? "MONOLAYER" : "MULTILAYER"}</span><strong>{materialMode === "mono" ? "EVEN COLOUR" : "COLOUR GRADIENT"}</strong></div>
           <div className="colour-scale"><span>CERVICAL</span><i /><span>OCCLUSAL</span></div>
@@ -206,7 +222,7 @@ export default function Home() {
         <p className="eyebrow reveal">Ready to send a case?</p>
         <h2 className="reveal">Send your<br /><em>zirconia case.</em></h2>
         <p className="reveal">Send your scan and prescription. Our team will take care of the rest.</p>
-        <div className="contact-actions reveal"><a className="button gold" href="mailto:cases@trilliondentallab.com">Start a digital case <span>↗</span></a><a className="button outline" href="tel:+6500000000">Speak to the lab</a></div>
+        <div className="contact-actions reveal"><a className="button gold" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">Start a case online <span>↗</span></a><a className="button outline" href="tel:+6500000000">Speak to the lab</a></div>
       </section>
 
       <footer>
