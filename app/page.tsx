@@ -3,8 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-// Replace this placeholder with Trillion's real case-submission website URL.
-const CASE_SUBMISSION_URL = "https://example.com/case-submission";
+const CASE_SUBMISSION_URL = "https://wa.me/601113348503";
 
 const disciplines = [
   ["01", "Fit", "Clean margins and contacts for a better fit."],
@@ -41,6 +40,7 @@ export default function Home() {
   const [loaded, setLoaded] = useState(false);
   const [materialMode, setMaterialMode] = useState<"mono" | "multi">("multi");
   const [selectedCase, setSelectedCase] = useState<number | null>(null);
+  const [crownRotation, setCrownRotation] = useState({ x: -4, y: -7 });
   const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -94,26 +94,14 @@ export default function Home() {
             <p className="hero-intro">We make zirconia crowns and bridges that fit well, look natural and last.</p>
             <div className="hero-actions">
               <a className="button gold" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">Send your zirconia case <span>↗</span></a>
-              <a className="text-link" href="#precision">Explore the process <span>↓</span></a>
             </div>
           </div>
           <div className="hero-visual">
             <div className="crown-stage">
               <Image className="crown-photo" src="/crown-hero-v2.png" alt="Realistic white zirconia molar crown" width={1500} height={1049} priority />
               <Image className="crown-scan" src="/crown-hero-v2.png" alt="" width={1500} height={1049} aria-hidden="true" />
-              <div className="scan-line" aria-hidden="true" />
-              <div className="schematic-box box-a"><span>MARGIN</span><b>01</b></div>
-              <div className="schematic-box box-b"><span>CONTACT</span><b>02</b></div>
-              <div className="schematic-box box-c"><span>OCCLUSION</span><b>03</b></div>
-              <div className="schematic-box box-d"><span>ANATOMY</span><b>04</b></div>
             </div>
-            <div className="measure measure-a"><span>01</span> MARGIN INTEGRITY</div>
-            <div className="measure measure-b"><span>02</span> ANATOMY</div>
-            <div className="measure measure-c"><span>03</span> OCCLUSION</div>
-            <div className="model-tag">TRILLION / ZR—01<small>MULTILAYER ZIRCONIA · CAD/CAM</small></div>
           </div>
-          <div className="hero-status"><span>Scroll view</span><strong>3D</strong><span>Photo → Scan</span></div>
-          <div className="scroll-cue">Scroll to scan <i /></div>
         </div>
       </section>
 
@@ -124,10 +112,25 @@ export default function Home() {
           <p>Every crown is checked for fit, bite, strength and appearance.</p>
         </div>
         <div className="precision-showcase">
-          <div className="precision-product reveal">
-            <span className="precision-ring ring-one" /><span className="precision-ring ring-two" />
-            <Image src="/crown-hero-v2.png" alt="Zirconia crown shown during quality checking" width={1500} height={1049} />
-            <div className="precision-label label-fit">01 · FIT</div><div className="precision-label label-bite">02 · BITE</div><div className="precision-label label-strength">03 · STRENGTH</div><div className="precision-label label-looks">04 · LOOKS</div>
+          <div
+            className="precision-product reveal"
+            onPointerMove={(event) => {
+              const bounds = event.currentTarget.getBoundingClientRect();
+              const x = (event.clientY - bounds.top) / bounds.height - 0.5;
+              const y = (event.clientX - bounds.left) / bounds.width - 0.5;
+              setCrownRotation({ x: x * -24, y: y * 42 });
+            }}
+            onPointerLeave={() => setCrownRotation({ x: -4, y: -7 })}
+            aria-label="Move across the crown to rotate it"
+          >
+            <span className="precision-ring ring-one" />
+            <Image
+              src="/crown-hero-v2.png"
+              alt="Interactive zirconia crown shown during quality checking"
+              width={1500}
+              height={1049}
+              style={{ transform: `perspective(900px) rotateX(${crownRotation.x}deg) rotateY(${crownRotation.y}deg)` }}
+            />
           </div>
           <div className="discipline-grid upgraded">
             {disciplines.map(([num, title, copy]) => <article className="discipline reveal" key={title}>
@@ -193,7 +196,8 @@ export default function Home() {
           </div>
         </div>
         <div className={`material-photo-view ${materialMode}`}>
-          <Image key={materialMode} src={materialMode === "mono" ? "/monolayer-zirconia-v1.png" : "/multilayer-zirconia-v1.png"} alt={materialMode === "mono" ? "Monolayer zirconia crown with an even shade" : "Multilayer zirconia crown with a natural shade gradient"} width={1254} height={1254} />
+          <Image className={`material-product-image ${materialMode === "mono" ? "active" : ""}`} src="/monolayer-zirconia-v1.webp" alt="Monolayer zirconia crown with an even shade" width={900} height={900} loading="eager" />
+          <Image className={`material-product-image ${materialMode === "multi" ? "active" : ""}`} src="/multilayer-zirconia-v1.webp" alt="Multilayer zirconia crown with a natural shade gradient" width={900} height={900} loading="eager" />
           <div className="material-picture-label"><span>{materialMode === "mono" ? "MONOLAYER" : "MULTILAYER"}</span><strong>{materialMode === "mono" ? "EVEN COLOUR" : "COLOUR GRADIENT"}</strong></div>
           <div className="colour-scale"><span>CERVICAL</span><i /><span>OCCLUSAL</span></div>
         </div>
@@ -222,11 +226,15 @@ export default function Home() {
         <p className="eyebrow reveal">Ready to send a case?</p>
         <h2 className="reveal">Send your<br /><em>zirconia case.</em></h2>
         <p className="reveal">Send your scan and prescription. Our team will take care of the rest.</p>
-        <div className="contact-actions reveal"><a className="button gold" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">Start a case online <span>↗</span></a><a className="button outline" href="tel:+6500000000">Speak to the lab</a></div>
+        <div className="contact-actions reveal"><a className="button gold" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">Start a case online <span>↗</span></a><a className="button outline" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">Speak to the lab</a></div>
       </section>
 
       <footer>
-        <BrandMark /><p>Zirconia crown &amp; bridge specialists.</p><div><a href="#workflow">Workflow</a><a href="#tracking">Tracking</a><a href="#cases">Cases</a></div><span>© {new Date().getFullYear()} Trillion Dental Lab</span>
+        <BrandMark />
+        <address className="footer-address"><strong>Trillion Dental</strong>Pt 622, Villa Batutah, Kg Bukit Marak,<br />16150 Kota Bharu, Kelantan</address>
+        <a className="footer-phone" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">+60 11-1334 8503</a>
+        <div className="footer-links"><a href="#workflow">Workflow</a><a href="#tracking">Tracking</a><a href="#cases">Cases</a></div>
+        <span>© {new Date().getFullYear()} Trillion Dental Lab</span>
       </footer>
 
       {selectedCase !== null && <div className="case-modal" role="dialog" aria-modal="true" aria-label={`${cases[selectedCase].title} case details`} onClick={() => setSelectedCase(null)}>
