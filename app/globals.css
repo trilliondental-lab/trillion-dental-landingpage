@@ -221,7 +221,9 @@ nav a { font-size:13px; }
 .case-card { border:0; padding:0; color:inherit; text-align:left; font-family:inherit; cursor:pointer; transition:transform .3s,border-color .3s; border:1px solid transparent; }
 .case-card:hover { transform:translateY(-8px); border-color:rgba(201,164,91,.5); }.case-card:focus-visible { outline:2px solid var(--gold); outline-offset:3px; }
 .case-art { background-image:url('/case-examples-v1.png')!important; background-size:300% 100%!important; background-repeat:no-repeat!important; }
-.case-image-one .case-art,.case-image-one.case-dialog-photo { background-position:0 center!important; }.case-image-two .case-art,.case-image-two.case-dialog-photo { background-position:50% center!important; }.case-image-three .case-art,.case-image-three.case-dialog-photo { background-position:100% center!important; }
+.case-image-one .case-art,.case-image-one.case-dialog-photo { background-image:url('/case-single-central.webp')!important; background-position:center!important; background-size:cover!important; }
+.case-image-two .case-art,.case-image-two.case-dialog-photo { background-image:url('/case-posterior-bridge.webp')!important; background-position:center!important; background-size:cover!important; }
+.case-image-three .case-art,.case-image-three.case-dialog-photo { background-image:url('/case-anterior-bridge.webp')!important; background-position:center!important; background-size:cover!important; }
 .case-art::before,.case-art::after { display:none; }.case-art i { display:none; }
 .case-meta b { float:right; margin-top:-24px; color:var(--gold); font-size:12px; font-weight:500; }
 .example-note { margin:22px 0 0; color:#6f6b64; font-size:13px; }

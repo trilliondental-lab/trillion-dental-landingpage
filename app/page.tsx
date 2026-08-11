@@ -23,9 +23,9 @@ const workflow = [
 ];
 
 const cases = [
-  { id: "01", type: "Anterior", title: "Single Central", meta: "Multilayer · A2", image: "case-image-one", description: "A single central restoration with a natural shade transition, surface texture and balanced contact." },
-  { id: "02", type: "Posterior", title: "Three-unit Bridge", meta: "High-strength · A3", image: "case-image-two", description: "A three-unit posterior bridge designed for strong connectors, stable contact and a clean bite." },
-  { id: "03", type: "Full Arch", title: "Full-arch Zirconia", meta: "Multilayer · BL3", image: "case-image-three", description: "A full-arch zirconia example planned for strength, even occlusion and a natural smile line." },
+  { id: "01", type: "Anterior", title: "Single Central Crown", meta: "Anterior · Single unit", image: "case-image-one", description: "A single central crown shaped and finished to blend naturally with the neighbouring teeth." },
+  { id: "02", type: "Posterior", title: "Four-unit Bridge", meta: "Posterior · Bridge", image: "case-image-two", description: "A four-unit posterior bridge designed with strong connectors, stable contacts and natural occlusal anatomy." },
+  { id: "03", type: "Anterior", title: "Three-unit Anterior Bridge", meta: "Anterior · Gingival contour", image: "case-image-three", description: "A three-unit anterior bridge with a shaped gingival contour for a natural emergence and smile-line appearance." },
 ];
 
 function BrandMark() {
@@ -217,7 +217,6 @@ export default function Home() {
             <div className="case-meta"><span>{item.id} / {item.type}</span><h3>{item.title}</h3><p>{item.meta}</p><b>View case ↗</b></div>
           </button>)}
         </div>
-        <p className="example-note">Illustrative examples shown. Replace these with approved Trillion case photos when ready.</p>
       </section>
 
       <section id="services" className="capabilities section-pad">
@@ -247,7 +246,7 @@ export default function Home() {
         <div className="case-dialog" onClick={(event) => event.stopPropagation()}>
           <button className="modal-close" onClick={() => setSelectedCase(null)} aria-label="Close case details">×</button>
           <div className={`case-dialog-photo ${cases[selectedCase].image}`} />
-          <div className="case-dialog-copy"><span>{cases[selectedCase].id} / {cases[selectedCase].type}</span><h2>{cases[selectedCase].title}</h2><p>{cases[selectedCase].description}</p><small>{cases[selectedCase].meta} · Illustrative example</small></div>
+          <div className="case-dialog-copy"><span>{cases[selectedCase].id} / {cases[selectedCase].type}</span><h2>{cases[selectedCase].title}</h2><p>{cases[selectedCase].description}</p><small>{cases[selectedCase].meta}</small></div>
         </div>
       </div>}
     </main>
