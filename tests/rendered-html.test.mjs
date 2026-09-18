@@ -1,91 +1,48 @@
 import assert from "node:assert/strict";
-import { access, readFile, readdir } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
-const developmentPreviewMeta =
-  /<meta(?=[^>]*\bname=["']codex-preview["'])(?=[^>]*\bcontent=["']development["'])[^>]*>/i;
-const templateRoot = new URL("../", import.meta.url);
-const previewRoot = new URL("../app/_sites-preview/", import.meta.url);
+const root = new URL("../dist/client/", import.meta.url);
+const html = await readFile(new URL("index.html", root), "utf8");
+const markup = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "");
 
-async function render() {
-  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
-  const { default: worker } = await import(workerUrl.href);
-
-  return worker.fetch(
-    new Request("http://localhost/", {
-      headers: { accept: "text/html" },
-    }),
-    {
-      ASSETS: {
-        fetch: async () => new Response("Not found", { status: 404 }),
-      },
-    },
-    {
-      waitUntil() {},
-      passThroughOnException() {},
-    },
-  );
-}
-
-test("server-renders the starter loading skeleton", async () => {
-  const response = await render();
-  assert.equal(response.status, 200);
-  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
-
-  const html = await response.text();
-  assert.match(html, developmentPreviewMeta);
-  assert.match(html, /<title>Your site is taking shape<\/title>/i);
-  assert.match(html, /Building your site/);
-  assert.match(html, /Your site is taking shape/);
-  assert.match(
-    html,
-    /Your first version will appear here automatically when it’s ready\./,
-  );
-  assert.doesNotMatch(html, /Codex/);
-  assert.match(html, /react-loading-skeleton/);
-  assert.match(html, /role="status"/);
+test("exports a complete clinic website with correct search metadata", () => {
+  assert.match(markup, /<html lang="en"/);
+  assert.equal((markup.match(/<h1\b/g) || []).length, 1);
+  assert.match(markup, /<title>Trillion Dental Lab \| Zirconia/);
+  assert.match(markup, /rel="canonical" href="https:\/\/trilliondentallab\.netlify\.app\/?"/);
+  assert.match(markup, /Pt 622, Villa Batutah/);
+  assert.match(markup, /mailto:trilliondental@gmail\.com/);
+  assert.doesNotMatch(markup, /MALAYSIA.S NO.1|Your site is taking shape/);
 });
 
-test("keeps the loading skeleton scoped and disposable", async () => {
-  const [preview, css, page, layout, packageJson, files] = await Promise.all([
-    readFile(new URL("SkeletonPreview.tsx", previewRoot), "utf8"),
-    readFile(new URL("preview.css", previewRoot), "utf8"),
-    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../package.json", import.meta.url), "utf8"),
-    readdir(previewRoot),
-  ]);
+test("provides the supplied form and distinct enquiry actions", () => {
+  const links = [...markup.matchAll(/href="([^"]+)"/g)].map(m => m[1]);
+  const form = "https://drive.google.com/file/d/1XDgnwL7sAtKmMD6W72m4UL4IyDR1kBhH/view?usp=sharing";
+  assert.ok(links.filter(url => url === form).length >= 4);
+  assert.ok(links.includes("https://labtrack-trilliondental.netlify.app/"));
+  const enquiries = [...new Set(links.filter(url => url.startsWith("https://wa.me/") && url.includes("?text=")))];
+  assert.ok(enquiries.length >= 3, "New case, specifications and general enquiries should differ");
+  for (const url of enquiries) assert.ok(new URL(url).searchParams.get("text").length > 30);
+});
 
-  assert.deepEqual(files.sort(), ["SkeletonPreview.tsx", "preview.css"]);
-  assert.match(preview, /from "react-loading-skeleton"/);
-  assert.match(preview, /baseColor="#eceae7"/);
-  assert.match(preview, /highlightColor="#f9f8f6"/);
-  assert.match(preview, /duration=\{2\.8\}/);
-  assert.match(preview, /sites-skeleton-search-placeholder/);
-  assert.match(packageJson, /"react-loading-skeleton": "3\.5\.0"/);
+test("all internal anchor and asset references resolve in the export", async () => {
+  const ids = new Set([...markup.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]));
+  const urls = [...markup.matchAll(/(?:href|src)="([^"]+)"/g)].map(m => m[1]);
+  for (const url of new Set(urls)) {
+    if (url.startsWith("#")) assert.ok(ids.has(url.slice(1)), `Missing anchor ${url}`);
+    else if (url.startsWith("/") && url !== "/") await access(new URL(url.slice(1), root));
+  }
+  for (const cssUrl of urls.filter(url => url.endsWith(".css"))) {
+    const css = await readFile(new URL(cssUrl.slice(1), root), "utf8");
+    for (const match of css.matchAll(/url\(["']?(\/[^)"']+)["']?\)/g)) await access(new URL(match[1].slice(1), root));
+  }
+});
 
-  const shellIndex = preview.indexOf('className="sites-skeleton-shell"');
-  const statusIndex = preview.indexOf('className="sites-skeleton-status"');
-  assert.ok(shellIndex >= 0 && statusIndex > shellIndex);
-  assert.match(css, /position:\s*fixed/);
-  assert.match(css, /inset:\s*0/);
-  assert.match(css, /opacity:\s*0\.52/);
-  assert.match(css, /prefers-reduced-motion:\s*reduce/);
-  assert.doesNotMatch(css, /#020617|canvas|pets|progress/i);
-  assert.doesNotMatch(
-    preview,
-    /loading-spinner|status-mark|status-progress|canvas|cookie|random/i,
-  );
-
-  assert.match(page, /export const metadata:\s*Metadata/);
-  assert.match(page, /"codex-preview": "development"/);
-  assert.match(page, /<SkeletonPreview \/>/);
-  assert.match(layout, /title:\s*"Starter Project"/);
-  assert.doesNotMatch(layout, /codex-preview|_sites-preview|themeColor|\bViewport\b/);
-  assert.doesNotMatch(css, /(^|\s)(html|body)\s*\{/m);
-
-  await assert.rejects(
-    access(new URL("public/_sites-preview", templateRoot)),
-  );
+test("exports essential clinic information and labels demonstration data", async () => {
+  for (const text of ["Your submission checklist", "Turnaround", "Collection", "Adjustments", "QC 1", "QC 2", "Sample cases, not live patient data"]) assert.ok(markup.includes(text), text);
+  assert.equal((markup.match(/class="case-card/g) || []).length, 3);
+  assert.match(await readFile(new URL("robots.txt", root), "utf8"), /Sitemap: https:\/\/trilliondentallab.netlify.app\/sitemap.xml/);
+  await access(new URL("404.html", root));
+  await access(new URL("mobile-preview.html", root));
 });

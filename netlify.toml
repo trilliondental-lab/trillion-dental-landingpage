@@ -1,5 +1,6 @@
 [build]
-  publish = "netlify-dist"
+  command = "npm run build:netlify"
+  publish = "dist/client"
 
 [[headers]]
   for = "/_next/static/*"
@@ -9,9 +10,9 @@
 [[headers]]
   for = "/*.webp"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=3600, must-revalidate"
 
 [[redirects]]
   from = "/mobile-preview"
-  to = "/mobile-preview/index.html"
+  to = "/mobile-preview.html"
   status = 200

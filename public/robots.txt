@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /mobile-preview
+Sitemap: https://trilliondentallab.netlify.app/sitemap.xml

@@ -5,6 +5,11 @@ import { useEffect, useRef, useState } from "react";
 
 const CASE_SUBMISSION_URL = "https://wa.me/601113348503";
 const CLINIC_PORTAL_URL = "https://labtrack-trilliondental.netlify.app/";
+const LAB_FORM_URL = "https://drive.google.com/file/d/1XDgnwL7sAtKmMD6W72m4UL4IyDR1kBhH/view?usp=sharing";
+const caseEnquiry = (message: string) => `${CASE_SUBMISSION_URL}?text=${encodeURIComponent(message)}`;
+const NEW_CASE_URL = caseEnquiry("Hello Trillion Dental Lab, I would like to submit a new case. Please help me confirm the material, quotation, turnaround and submission method for my clinic.");
+const GENERAL_ENQUIRY_URL = caseEnquiry("Hello Trillion Dental Lab, I have a question about your lab services.");
+const MAP_URL = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("Trillion Dental Pt 622 Villa Batutah Kg Bukit Marak 16150 Kota Bharu Kelantan");
 
 const disciplines = [
   ["01", "Fit", "Clean margins and contacts for a better fit."],
@@ -38,66 +43,64 @@ function BrandMark() {
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [loaded, setLoaded] = useState(false);
   const [materialMode, setMaterialMode] = useState<"mono" | "multi">("multi");
   const [selectedCase, setSelectedCase] = useState<number | null>(null);
   const [crownRotation, setCrownRotation] = useState({ x: -4, y: -7 });
-  const heroRef = useRef<HTMLElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setLoaded(true);
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("is-visible"));
-    }, { threshold: 0.12 });
-    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-    const updateHero = () => {
-      if (!heroRef.current) return;
-      const rect = heroRef.current.getBoundingClientRect();
-      const distance = Math.max(1, rect.height - window.innerHeight);
-      const progress = Math.min(1, Math.max(0, -rect.top / distance));
-      const schematic = Math.min(1, Math.max(0, (progress - .34) / .58));
-      heroRef.current.style.setProperty("--hero-progress", progress.toFixed(3));
-      heroRef.current.style.setProperty("--schematic", schematic.toFixed(3));
+    if (selectedCase === null) return;
+    const previousFocus = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const dialog = dialogRef.current;
+    dialog?.querySelector<HTMLButtonElement>("button")?.focus();
+    const keepFocus = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelectedCase(null);
+      if (event.key !== "Tab" || !dialog) return;
+      const elements = Array.from(dialog.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex="0"]'));
+      const first = elements[0];
+      const last = elements[elements.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
     };
-    const closeModal = (event: KeyboardEvent) => event.key === "Escape" && setSelectedCase(null);
-    updateHero();
-    window.addEventListener("scroll", updateHero, { passive: true });
-    window.addEventListener("resize", updateHero);
-    window.addEventListener("keydown", closeModal);
+    document.addEventListener("keydown", keepFocus);
     return () => {
-      observer.disconnect();
-      window.removeEventListener("scroll", updateHero);
-      window.removeEventListener("resize", updateHero);
-      window.removeEventListener("keydown", closeModal);
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", keepFocus);
+      previousFocus?.focus();
     };
-  }, []);
+  }, [selectedCase]);
 
   return (
-    <main id="top" className={loaded ? "loaded" : ""}>
+    <main id="top" className="loaded">
+      <a className="skip-link" href="#main-content">Skip to content</a>
       <header className="nav-shell">
         <BrandMark />
         <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation" aria-expanded={menuOpen}><span /><span /></button>
         <nav className={menuOpen ? "open" : ""} aria-label="Primary navigation">
           <a href="#zirconia" onClick={() => setMenuOpen(false)}>Zirconia</a>
+          <a href="#cases" onClick={() => setMenuOpen(false)}>Case gallery</a>
           <a href="#workflow" onClick={() => setMenuOpen(false)}>Workflow</a>
-          <a href="#tracking" onClick={() => setMenuOpen(false)}>Case tracking</a>
-          <a href="#services" onClick={() => setMenuOpen(false)}>Other services</a>
+          <a href={LAB_FORM_URL} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>Lab form ↗</a>
+          <a href={CLINIC_PORTAL_URL} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>Clinic login ↗</a>
         </nav>
-        <a className="mobile-contact-cta" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">Contact us now</a>
-        <a className="nav-cta" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">Send a case <span>↗</span></a>
+        <a className="mobile-contact-cta" href={NEW_CASE_URL} target="_blank" rel="noreferrer">WhatsApp ↗</a>
+        <a className="nav-cta" href={NEW_CASE_URL} target="_blank" rel="noreferrer">Discuss a case <span>↗</span></a>
       </header>
 
-      <section className="hero-scroll" ref={heroRef}>
+      <section id="main-content" className="hero-scroll" tabIndex={-1}>
         <div className="hero">
           <div className="hero-grid" aria-hidden="true" />
-          <Image className="malaysia-corner-flag" src="/malaysia-corner-flag.webp" alt="Malaysian flag" width={720} height={529} priority unoptimized />
           <div className="hero-copy">
-            <p className="eyebrow">Malaysia&apos;s No.1 Zirconia Laboratory</p>
+            <p className="eyebrow">Based in Kelantan, Malaysia</p>
             <h1><span>Zirconia.</span><span className="gold-line">Perfected.</span></h1>
-            <p className="hero-intro">We make zirconia crowns and bridges that fit well, look natural and last.</p>
+            <p className="hero-intro">Zirconia crowns and bridges for dental clinics—supported by digital workflows, two-stage quality checks and online case tracking.</p>
             <div className="hero-actions">
-              <a className="button gold" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">Send your zirconia case <span>↗</span></a>
+              <a className="button gold" href={NEW_CASE_URL} target="_blank" rel="noreferrer">Discuss a case on WhatsApp <span>↗</span></a>
+              <a className="text-link" href="#cases">View our cases <span>↓</span></a>
             </div>
+            <a className="hero-form-link" href={LAB_FORM_URL} target="_blank" rel="noreferrer">Get the lab prescription form (PDF) ↗</a>
           </div>
           <div className="hero-visual">
             <div className="crown-stage">
@@ -108,13 +111,15 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="clinic-proof" aria-label="Support for your clinic"><span><b>01</b> Scan, model or impression</span><span><b>02</b> Two-stage quality checks</span><a href="#tracking"><b>03</b> Online case tracking ↗</a></div>
+
       <section id="zirconia" className="material section-pad">
         <div className="material-copy reveal">
           <p className="eyebrow">Zirconia options</p>
           <h2>See the colour<br />difference.</h2>
           <p>Choose an option to see how the colour and translucency change.</p>
           <div className="material-tabs" role="group" aria-label="Choose zirconia type">
-            <button className={`material-tab ${materialMode === "mono" ? "active" : ""}`} onClick={() => setMaterialMode("mono")} aria-pressed={materialMode === "mono"}><span>MONOLAYER</span><strong>One even shade</strong><p>Strong and consistent. Often used for posterior and long-span cases.</p></button>
+            <button className={`material-tab ${materialMode === "mono" ? "active" : ""}`} onClick={() => setMaterialMode("mono")} aria-pressed={materialMode === "mono"}><span>MONOLAYER</span><strong>One even shade</strong><p>A uniform shade through the restoration. Discuss suitability for your case with our team.</p></button>
             <button className={`material-tab ${materialMode === "multi" ? "active" : ""}`} onClick={() => setMaterialMode("multi")} aria-pressed={materialMode === "multi"}><span>MULTILAYER</span><strong>Natural shade change</strong><p>Warmer near the gum line and more translucent near the biting surface.</p></button>
           </div>
         </div>
@@ -124,10 +129,24 @@ export default function Home() {
           <div className="material-picture-label"><span>{materialMode === "mono" ? "MONOLAYER" : "MULTILAYER"}</span><strong>{materialMode === "mono" ? "EVEN COLOUR" : "COLOUR GRADIENT"}</strong></div>
           <div className="colour-scale"><span>CERVICAL</span><i /><span>OCCLUSAL</span></div>
         </div>
+        <div className="material-comparison">
+          <h3>Choose with your case in mind.</h3>
+          {/* Keyboard focus lets users scroll the comparison horizontally on small screens. */}
+          {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
+          <div className="table-scroll" role="region" aria-label="Zirconia options comparison" tabIndex={0}>
+            <table><thead><tr><th scope="col">What to compare</th><th scope="col">Monolayer</th><th scope="col">Multilayer</th></tr></thead><tbody>
+              <tr><th scope="row">Shade appearance</th><td>One even base shade</td><td>Graduated shade from cervical to occlusal</td></tr>
+              <tr><th scope="row">Aesthetic planning</th><td>Discuss the required stain and finish</td><td>Discuss shade transition and translucency</td></tr>
+              <tr><th scope="row">Case selection</th><td colSpan={2}>Confirm the specific material, restoration design and manufacturer indications with the lab.</td></tr>
+              <tr><th scope="row">Before prescribing</th><td colSpan={2}>Request the available brand, shade range, technical data and preparation requirements for your case.</td></tr>
+            </tbody></table>
+          </div>
+          <a className="inline-link" href={caseEnquiry("Hello Trillion Dental Lab, please share the zirconia brands, shade options and manufacturer specifications available for my case.")} target="_blank" rel="noreferrer">Request material specifications ↗</a>
+        </div>
       </section>
 
       <section id="cases" className="cases section-pad">
-        <div className="cases-head reveal"><div><p className="eyebrow">Case examples</p><h2>Click to view<br />each case.</h2></div><p>Open a case to see a larger picture and a short description.</p></div>
+        <div className="cases-head reveal"><div><p className="eyebrow">Case gallery</p><h2>Explore our<br />zirconia work.</h2></div><p>Take a closer look at crown and bridge examples, from single anterior units to multi-unit restorations.</p></div>
         <div className="case-grid">
           {cases.map((item, index) => <button className={`case-card reveal ${item.image}`} key={item.id} onClick={() => setSelectedCase(index)} aria-label={`View ${item.title} case example`}>
             <div className="case-art"><i /></div>
@@ -175,16 +194,11 @@ export default function Home() {
 
       <section id="workflow" className="workflow section-pad">
         <div className="workflow-head reveal">
-          <div>
-            <p className="eyebrow desktop-workflow-title">How we make your case</p>
-            <p className="eyebrow mobile-workflow-title">How to send your case</p>
-            <h2 className="desktop-workflow-title">A clear digital<br />workflow.</h2>
-            <h2 className="mobile-workflow-title">Send your case,<br />your way.</h2>
-          </div>
+          <div><p className="eyebrow">How we make your case</p><h2>A clear digital<br />workflow.</h2></div>
           <p>Every case is checked twice before it is packed and sent to your clinic.</p>
         </div>
         <div className="case-entry reveal">
-          <div><span>01</span><strong>Digital Scan</strong><p>Send STL, PLY or IOS files.</p></div>
+          <div><span>01</span><strong>Digital Scan</strong><p>Send STL or PLY exports. Ask us how to connect your intraoral scanner.</p></div>
           <div><span>02</span><strong>Physical Model</strong><p>Send your prepared dental model.</p></div>
           <div><span>03</span><strong>Impression</strong><p>Send a conventional impression to our lab.</p></div>
         </div>
@@ -210,15 +224,31 @@ export default function Home() {
           <a className="button outline portal-button" href={CLINIC_PORTAL_URL} target="_blank" rel="noreferrer">Open clinic portal <span>↗</span></a>
         </div>
         <div className="portal-window reveal" aria-label="Example of the clinic case tracking website">
-          <div className="portal-top"><BrandMark /><span>CLINIC PORTAL</span><b>● LIVE</b></div>
+          <div className="portal-top"><BrandMark /><span>CLINIC PORTAL</span><b>DEMO</b></div>
+          <p className="demo-note">Illustrative preview · Sample cases, not live patient data</p>
           <div className="portal-summary"><span>Active cases<strong>08</strong></span><span>Ready to send<strong>02</strong></span><span>Due this week<strong>05</strong></span></div>
           <div className="portal-table">
             <div className="portal-row head"><span>CASE</span><span>PATIENT</span><span>STAGE</span><span>DELIVERY</span></div>
-            <div className="portal-row"><span>#ZR-1048</span><span>A. Rahman</span><span><i className="status design" />CAD Design</span><span>14 Aug</span></div>
-            <div className="portal-row"><span>#ZR-1042</span><span>S. Lim</span><span><i className="status finish" />Finishing</span><span>13 Aug</span></div>
-            <div className="portal-row"><span>#ZR-1039</span><span>N. Tan</span><span><i className="status ready" />QC 2</span><span>12 Aug</span></div>
+            <div className="portal-row"><span>#DEMO-01</span><span>Sample A</span><span><i className="status design" />CAD Design</span><span>14 Aug</span></div>
+            <div className="portal-row"><span>#DEMO-02</span><span>Sample B</span><span><i className="status finish" />Finishing</span><span>13 Aug</span></div>
+            <div className="portal-row"><span>#DEMO-03</span><span>Sample C</span><span><i className="status ready" />QC 2</span><span>12 Aug</span></div>
           </div>
-          <div className="portal-progress"><span>CASE #ZR-1048</span><div><i /><i className="done" /><i /><i /><i /></div><small>Scan received → CAD design → Production → QC → Delivery</small></div>
+          <div className="portal-progress"><span>CASE #DEMO-01</span><div><i /><i className="done" /><i /><i /><i /></div><small>Scan received → CAD design → Production → QC → Delivery</small></div>
+        </div>
+      </section>
+
+      <section id="working-with-us" className="working section-pad">
+        <div className="working-heading"><p className="eyebrow">Working with Trillion</p><h2>A clear start.<br /><em>A smoother handover.</em></h2><p>Prepare the case details, then speak to our team to confirm the plan before production.</p></div>
+        <div className="working-grid">
+          <article className="submission-card"><span className="eyebrow">01 / Prepare your case</span><h3>Your submission checklist</h3><ul className="checklist"><li>Completed lab prescription form</li><li>Clinic and dentist contact details</li><li>Case reference and tooth numbers</li><li>Restoration type, material and shade</li><li>Scans, model or impression as applicable</li><li>Requested date and relevant case instructions</li></ul><a className="button gold" href={LAB_FORM_URL} target="_blank" rel="noreferrer">Open lab form (PDF) <span>↗</span></a><p className="small-copy">View, print or download the form from Google Drive.</p></article>
+          <div className="clinic-faq">
+            <details open><summary>Turnaround & urgent cases</summary><p>Share your requested date when you enquire. Ask our team to confirm the production and delivery schedule for your case before booking the fitting.</p></details>
+            <details><summary>Collection & delivery</summary><p>Send your clinic location so we can confirm the available collection or courier arrangement and any delivery charges.</p></details>
+            <details><summary>Adjustments & remakes</summary><p>Contact the lab with the case reference and the issue to arrange a review. Ask for the applicable adjustment or remake terms when confirming your case.</p></details>
+            <details><summary>Material, shade & quotation</summary><p>Discuss the restoration, material option and shade with our team. Request a quotation and material specifications before proceeding.</p></details>
+            <details><summary>Sending your first digital case</summary><p>Tell us which scanner you use. We can discuss the appropriate export or transfer route. Use a case reference in your initial enquiry; confirm the appropriate channel before sharing patient information.</p></details>
+            <a className="inline-link" href={NEW_CASE_URL} target="_blank" rel="noreferrer">Confirm your case details on WhatsApp ↗</a>
+          </div>
         </div>
       </section>
 
@@ -233,23 +263,25 @@ export default function Home() {
         <div className="contact-grid" aria-hidden="true" />
         <p className="eyebrow reveal">Ready to send a case?</p>
         <h2 className="reveal">Send your<br /><em>zirconia case.</em></h2>
-        <p className="reveal">Send your scan and prescription. Our team will take care of the rest.</p>
-        <div className="contact-actions reveal"><a className="button gold" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">Start a case online <span>↗</span></a><a className="button outline" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">Speak to the lab</a></div>
+        <p className="reveal">Start with the lab form. Then confirm your material, quotation and requested date with our team.</p>
+        <div className="contact-actions reveal"><a className="button gold" href={NEW_CASE_URL} target="_blank" rel="noreferrer">Discuss a case on WhatsApp <span>↗</span></a><a className="button outline" href={LAB_FORM_URL} target="_blank" rel="noreferrer">Open lab form (PDF) <span>↗</span></a></div>
+        <a className="inline-link contact-question" href={GENERAL_ENQUIRY_URL} target="_blank" rel="noreferrer">Have a general question? Speak to the lab ↗</a>
       </section>
 
       <footer>
         <BrandMark />
-        <address className="footer-address"><strong>Trillion Dental</strong>Pt 622, Villa Batutah, Kg Bukit Marak,<br />16150 Kota Bharu, Kelantan</address>
-        <a className="footer-phone" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">+60 11-1334 8503</a>
-        <div className="footer-links"><a href="#workflow">Workflow</a><a href="#tracking">Tracking</a><a href="#cases">Cases</a></div>
+        <address className="footer-address"><strong>Trillion Dental</strong>Pt 622, Villa Batutah, Kg Bukit Marak,<br />16150 Kota Bharu, Kelantan<br /><a className="inline-link" href={MAP_URL} target="_blank" rel="noreferrer">Find us on Google Maps ↗</a></address>
+        <div className="footer-contact"><a className="footer-phone" href={CASE_SUBMISSION_URL} target="_blank" rel="noreferrer">+60 11-1334 8503</a><a className="inline-link" href="mailto:trilliondental@gmail.com">trilliondental@gmail.com</a></div>
+        <div className="footer-links"><a href="#cases">Case gallery</a><a href="#services">Lab services</a><a href="#working-with-us">Submission guide</a><a href={LAB_FORM_URL} target="_blank" rel="noreferrer">Lab form ↗</a><a href={CLINIC_PORTAL_URL} target="_blank" rel="noreferrer">Clinic login ↗</a></div>
         <span>© {new Date().getFullYear()} Trillion Dental Lab</span>
       </footer>
 
-      {selectedCase !== null && <div className="case-modal" role="dialog" aria-modal="true" aria-label={`${cases[selectedCase].title} case details`} onClick={() => setSelectedCase(null)}>
-        <div className="case-dialog" onClick={(event) => event.stopPropagation()}>
+      {selectedCase !== null && <div className="case-modal">
+        <button className="modal-backdrop" aria-label="Dismiss case details" tabIndex={-1} onClick={() => setSelectedCase(null)} />
+        <div className="case-dialog" role="dialog" aria-modal="true" aria-label={`${cases[selectedCase].title} case details`} ref={dialogRef}>
           <button className="modal-close" onClick={() => setSelectedCase(null)} aria-label="Close case details">×</button>
-          <div className={`case-dialog-photo ${cases[selectedCase].image}`} />
-          <div className="case-dialog-copy"><span>{cases[selectedCase].id} / {cases[selectedCase].type}</span><h2>{cases[selectedCase].title}</h2><p>{cases[selectedCase].description}</p><small>{cases[selectedCase].meta}</small></div>
+          <div className={`case-dialog-photo ${cases[selectedCase].image}`} role="img" aria-label={`${cases[selectedCase].title} on a dental model`} />
+          <div className="case-dialog-copy"><span>{cases[selectedCase].id} / {cases[selectedCase].type}</span><h2>{cases[selectedCase].title}</h2><p>{cases[selectedCase].description}</p><dl className="case-facts"><div><dt>Restoration</dt><dd>{cases[selectedCase].title}</dd></div><div><dt>Region</dt><dd>{cases[selectedCase].type}</dd></div><div><dt>Shown</dt><dd>Restoration on a dental model</dd></div><div><dt>Planning focus</dt><dd>{selectedCase === 0 ? "Shade, contour and neighbouring teeth" : selectedCase === 1 ? "Connectors, contacts and occlusal anatomy" : "Gingival contour and emergence profile"}</dd></div></dl><a className="inline-link" href={caseEnquiry(`Hello Trillion Dental Lab, I would like to discuss a ${cases[selectedCase].title.toLowerCase()} case. Please advise on material options, shade and turnaround.`)} target="_blank" rel="noreferrer">Discuss a similar case ↗</a></div>
         </div>
       </div>}
     </main>
